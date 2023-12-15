@@ -13,8 +13,8 @@ const NavLinks = () => {
   const currentPath = usePathname()
 
   const links = [
-    { label: "Questions", href: "/" },
-    { label: "Hot", href: "/dashboard/issues" },
+    { label: "Questions", href: "/dashboard/questions" },
+    { label: "My Questions", href: "/dashboard/my-questions" },
   ]
 
   return (
@@ -65,11 +65,11 @@ const AuthStatus = () => {
           <Button highContrast variant='outline' size="2">{session!.user!.name}</Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
-          <DropdownMenu.Item>
-            <Button variant='solid' size={'2'} onClick={() => signOut({
+          <DropdownMenu.Item onClick={() => signOut({
               redirect: true,
               callbackUrl: '/'
-            })}>Log out</Button>
+            })}>
+            Log out
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Root>

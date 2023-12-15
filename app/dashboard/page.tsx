@@ -2,6 +2,7 @@ import React from 'react'
 import LayoutDashboard from '../components/LayoutDashboard'
 import TopQuestions from './_components/TopQuestions'
 import TagList from './_components/TagList'
+import { Metadata } from 'next'
 
 const Dashboard = () => {
   return (
@@ -13,5 +14,12 @@ const Dashboard = () => {
     </LayoutDashboard>
   )
 }
+
+export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+  title: 'Fosi - Dashboard',
+  description: 'View all top questions'
+};
 
 export default Dashboard
