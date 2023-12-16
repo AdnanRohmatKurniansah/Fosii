@@ -15,8 +15,6 @@ const Dashboard = () => {
   )
 }
 
-export const dynamic = 'force-dynamic'
-
 export const metadata: Metadata = {
   title: 'Fosi - Dashboard',
   description: 'View all top questions'

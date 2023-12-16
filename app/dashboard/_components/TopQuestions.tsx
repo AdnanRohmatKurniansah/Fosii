@@ -18,8 +18,7 @@ const TopQuestions = async () => {
         _count: 'desc', 
       },
     },
-  });
-  
+  })
 
   const formattedQuestions = questions.map((question) => ({
     id: question.id,
@@ -44,7 +43,7 @@ const TopQuestions = async () => {
           <div key={i} className="list p-4 border-t grid grid-cols-1 md:grid-cols-5 border-gray-200">
             <div className="response col-span-1">
               <p className="answers">{quest.answersCount} answers</p>
-              <Badge color={quest.status == 'Open' ? 'blue' : 'crimson'} variant="outline" className="my-4">{quest.status}</Badge>
+              <Badge color={quest.status == 'Open' ? 'blue' : 'crimson'} variant="outline" className="mt-4">{quest.status}</Badge>
             </div>
             <div className="title col-span-4">
               <h1 className="text-md mb-3">{quest.title}</h1>

@@ -10,6 +10,7 @@ interface TagSelectProps {
   onTagSelect: (tagId: number | null) => void;
   name: string;
   control: Control<any>
+  selectedTagId?: number | null
 }
 
 const useTag = () => useQuery<Tag[]>({
@@ -19,12 +20,12 @@ const useTag = () => useQuery<Tag[]>({
   retry: 3,
 })
 
-const TagSelect: React.FC<TagSelectProps> = ({ onTagSelect, name, control }) => {
+const TagSelect: React.FC<TagSelectProps> = ({ onTagSelect, name, control, selectedTagId }) => {
   const { data: tags, error, isLoading } = useTag();
   const { field } = useController({
     control,
     name,
-    defaultValue: null,
+    defaultValue: selectedTagId || null,
   });
 
   if (isLoading) return <Skeleton height={'2.5rem'} />
