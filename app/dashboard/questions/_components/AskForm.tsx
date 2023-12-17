@@ -11,7 +11,6 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { Controller, FieldError, useForm } from 'react-hook-form'
 import { z } from 'zod'
-import 'easymde/dist/easymde.min.css'
 import SimpleMdeReact from 'react-simplemde-editor'
 import TagSelect from './TagSelect'
 import { Question } from '@prisma/client'
@@ -22,12 +21,16 @@ type QuestionUpdateFormData = z.infer<typeof QuestionUpdateSchema>
 
 const AskForm = ({ question }: { question?: Question }) => {
   const router = useRouter()
-  const { register, control, handleSubmit, formState: {errors} } = useForm<QuestionFormData | QuestionUpdateFormData>({
-    resolver: zodResolver(question ? QuestionUpdateSchema : QuestionSchema)
-  })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [imagePreview, setImagePreview] = useState<string | null>(question ? `/${question.pic}` : null)
   const [selectedTagId, setSelectedTagId] = useState<number | null>(question ? question.tagId : null)
+
+  const { register, control, handleSubmit, formState: {errors} } = useForm<QuestionFormData | QuestionUpdateFormData>({
+    resolver: zodResolver(question ? QuestionUpdateSchema : QuestionSchema),
+    defaultValues: {
+      tagId: selectedTagId !== null ? selectedTagId : undefined,
+    },
+  })
 
   const QuestionForm = async (data: QuestionFormData | QuestionUpdateFormData) => {
     setIsSubmitting(true)
@@ -118,7 +121,7 @@ const AskForm = ({ question }: { question?: Question }) => {
               <Text color="red" as="p">{(errors.pic as FieldError).message}</Text>
           )}
           </div>
-          <Button highContrast disabled={isSubmitting} size={'3'} variant="solid">
+          <Button disabled={isSubmitting} size={'3'} variant="solid">
             Submit
             {isSubmitting && <Spinner />}
           </Button>           

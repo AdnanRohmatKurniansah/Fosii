@@ -7,6 +7,7 @@ const TopQuestions = async () => {
   const questions = await prisma.question.findMany({
     include: {
       tag: true,
+      user: true,
       answers: {
         select: {
           id: true,
@@ -25,6 +26,7 @@ const TopQuestions = async () => {
     title: question.title,
     status: question.status,
     tagName: question.tag.name, 
+    author: question.user.name,
     answersCount: question.answers.length, 
     created_at: question.created_at,
   }))
@@ -46,13 +48,15 @@ const TopQuestions = async () => {
               <Badge color={quest.status == 'Open' ? 'blue' : 'crimson'} variant="outline" className="mt-4">{quest.status}</Badge>
             </div>
             <div className="title col-span-4">
-              <h1 className="text-md mb-3">{quest.title}</h1>
-              <div className="flex justify-between items-center">
-                <div className="tags">
+              <Link href={`/dashboard/questions/${quest.id}`}>
+                <h1 className="text-md mb-3">{quest.title}</h1>
+              </Link>
+              <div className="block md:flex lg:flex justify-between items-center">
+                <div className="tags mb-2 md:mb-0">
                   <Badge variant="soft" className="mr-2">{quest.tagName}</Badge>
                 </div>
                 <div className="user">
-                  <small className="name">{formatDate(quest.created_at)}</small>
+                  <small className="name"><span className="text-blue-600">{quest.author}</span> {formatDate(quest.created_at)}</small>
                 </div>
               </div>
             </div>

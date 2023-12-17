@@ -6,6 +6,7 @@ import { Theme } from '@radix-ui/themes';
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify';
 import AuthProvider from './providers/auth-provider';
+import 'easymde/dist/easymde.min.css'
 import 'react-loading-skeleton/dist/skeleton.css'
 import QueryClientProvider from './providers/query-client-provider';
 
