@@ -10,11 +10,13 @@ import { Controller, useForm } from 'react-hook-form'
 import SimpleMdeReact from 'react-simplemde-editor'
 import axios from 'axios'
 import { alert } from '@/app/components/Toast'
+import { useRouter } from 'next/navigation'
 
 type AddAnswerFormData = z.infer<typeof AddAnswerSchema>
 
 const AnswerForm = ({ questionId }: {questionId: number}) => {
-  const { register, control, handleSubmit, formState: {errors} } = useForm<AddAnswerFormData>({
+  const router = useRouter()
+  const { register, control, handleSubmit, formState: {errors}, reset } = useForm<AddAnswerFormData>({
     resolver: zodResolver(AddAnswerSchema),
     defaultValues: {
         questionId: questionId
@@ -23,19 +25,21 @@ const AnswerForm = ({ questionId }: {questionId: number}) => {
   const [ isSubmitting, setIsSubmitting ] = useState(false)
 
   const AddAnswer = async (data: AddAnswerFormData) => {
-    setIsSubmitting(true)
+    setIsSubmitting(true) 
 
     await axios.post('/api/answers', data)
       .then(({data}) => {
         setIsSubmitting(false)
+        reset()
         alert(data.message, 'success')
+        router.refresh()
     }).catch(({response}) => {  
         setIsSubmitting(false)
         alert(response.data.message, 'error')
     })
   }
 
-  return (
+  return (  
     <form onSubmit={handleSubmit(AddAnswer)}>
         <input type="hidden" {...register('questionId')} name="questionId" value={questionId}/>
         <TextField.Root>
@@ -48,7 +52,6 @@ const AnswerForm = ({ questionId }: {questionId: number}) => {
             />
         </TextField.Root>
         <Text color="red" className='mb-3' as="p">{errors.content?.message}</Text>
-        <Text color="red" as="p">{errors.questionId?.message}</Text>
         <Button type='submit' disabled={isSubmitting} size={'3'} variant="solid">
             Submit
             {isSubmitting && <Spinner />}

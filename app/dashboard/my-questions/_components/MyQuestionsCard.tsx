@@ -17,7 +17,7 @@ type Data = {
    questionId: number
 }
 
-const MyQuestionsCard: React.FC = () => {
+const MyQuestionsCard = () => {
   const queryClient = useQueryClient()
   const useQuestion = () => useQuery<MyQuestion[]>({
     queryKey: ['questions'],
