@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Button, Container, DropdownMenu, Flex, Text } from '@radix-ui/themes'
+import { Box, Button, Container, DropdownMenu, Flex } from '@radix-ui/themes'
 import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -35,7 +35,7 @@ const NavLinks = () => {
 
 const Navbar = () => {
   return (
-    <nav className="border-b mb-5 px-5 py-3">
+    <nav className="border-b mb-5 px-5 py-3 sticky top-0 z-10 bg-white">
       <Container>
         <Flex justify="between">
           <Flex align="center" gap="6">
@@ -43,8 +43,8 @@ const Navbar = () => {
               <Image alt='logo' width={'80'} height={'50'} src={Logo} />
             </Link>
             <Flex gap="6" className="flex-grow">
-            <NavLinks />
-          </Flex>
+              <NavLinks />
+            </Flex>
           </Flex>
           <AuthStatus />
         </Flex>
