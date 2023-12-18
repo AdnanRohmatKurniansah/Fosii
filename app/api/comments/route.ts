@@ -1,8 +1,8 @@
-import { getServerSession } from "next-auth"
-import { NextRequest, NextResponse } from "next/server"
-import { authOptions } from "../auth/[...nextauth]/route"
-import { AddAnswerSchema } from "@/app/validations/AnswerValidation"
-import { prisma } from "@/app/utils/prisma"
+import { getServerSession } from "next-auth";
+import { NextRequest, NextResponse } from "next/server";
+import { authOptions } from "../auth/[...nextauth]/route";
+import { AddCommenSchema } from "@/app/validations/CommentValidation";
+import { prisma } from "@/app/utils/prisma";
 
 export const POST = async (req: NextRequest) => {
     try {
@@ -11,12 +11,12 @@ export const POST = async (req: NextRequest) => {
       if (!session) { 
         return NextResponse.json({
           error: 'User not authenticated',
-        }, { status: 401 })
+        }, { status: 401 });
       }
   
       const requestData = await req.json()
 
-      const validationData = AddAnswerSchema.safeParse(requestData)
+      const validationData = AddCommenSchema.safeParse(requestData)
         
       if (!validationData.success) {
         return NextResponse.json(
@@ -26,19 +26,7 @@ export const POST = async (req: NextRequest) => {
       }
       
       requestData.questionId = parseInt(requestData.questionId)
-
-      const existingAnswer = await prisma.answer.findFirst({
-        where: {
-            questionId: requestData.questionId,
-            userId: session.user.id,
-        },
-      })
-
-      if (existingAnswer) {
-          return NextResponse.json({
-              message: 'You has already submitted an answer',
-          }, { status: 400 })
-      }
+      requestData.answerId = parseInt(requestData.answerId)
 
       const question = await prisma.question.findUnique({
         where: {
@@ -46,23 +34,30 @@ export const POST = async (req: NextRequest) => {
         }
       })
 
-      if (!question) {
+      const answer = await prisma.answer.findUnique({
+        where: {
+            id: requestData.answerId
+        }
+      })
+
+      if (!question || !answer) {
         return NextResponse.json({
-            message: 'Question not found',
+            message: 'Question dan answer not found',
         }, { status: 404 })
       }
 
-      const answer = await prisma.answer.create({
+      const comment = await prisma.comment.create({
         data: {
             questionId: question.id,
+            answerId: answer.id,
             content: requestData.content,
             userId: session.user.id
         }
       })
 
       return NextResponse.json({
-        message: 'Your answer has been sent',
-        data: answer
+        message: 'Your comment has been sent',
+        data: comment
       })
     } catch (error) {
       return NextResponse.json({

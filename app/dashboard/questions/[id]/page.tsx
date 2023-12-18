@@ -44,7 +44,7 @@ const DetailQuestion = async ({ params }: {params: Params}) => {
     <LayoutDashboard>
       <div className='questions mt-10'>
         <div className="pic flex justify-center">
-            <Image className='rounded-lg' alt='Question image' src={`/${formattedQuestions.pic}`} width={500} height={500}/>
+            <Image className='rounded-lg' alt='Question image' src={`/${formattedQuestions.pic}`} width={600} height={600}/>
         </div>
         <div className="detail">
             <Badge className='status my-2' variant='solid' color={formattedQuestions.status == 'Open' ? 'blue' : 'red' }>{formattedQuestions.status}</Badge>

@@ -3,6 +3,8 @@ import AnswerForm from './AnswerForm'
 import { prisma } from '@/app/utils/prisma'
 import { formatDate } from '@/app/utils/formatDate'
 import MarkDown from '@/app/components/MarkDown'
+import AnswersCommentsForm from './AnswersCommentsForm'
+import ListComment from './ListComment'
 
 const Answers = async ({ answerCount, questionId }: {answerCount: number, questionId: number}) => {
   const answers = await prisma.answer.findMany({
@@ -29,6 +31,8 @@ const Answers = async ({ answerCount, questionId }: {answerCount: number, questi
             <div className="user flex justify-end mt-5">
                 <small className="name"><span className="text-blue-600">{answer.user.name}</span> {formatDate(answer.created_at)}</small>
             </div>
+            <ListComment questionId={questionId} answerId={answer.id} />
+            <AnswersCommentsForm questionId={questionId} answerId={answer.id}/>
           </div>
         ))}
         </>

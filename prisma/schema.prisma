@@ -18,7 +18,6 @@ model User {
   answers Answer[]
   question Question[] 
   comments Comment[]
-  replyComment ReplyComment[]
 }
 
 model Tag {
@@ -69,18 +68,6 @@ model Comment {
   question Question @relation(fields: [questionId], references: [id])
   answerId Int
   answer Answer @relation(fields: [answerId], references: [id])
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  replyComment ReplyComment[]
-}
-
-model ReplyComment {
-  id Int @id @default(autoincrement())
-  content String
-  userId Int
-  user User @relation(fields: [userId], references: [id])
-  commentId Int
-  comment Comment @relation(fields: [commentId], references: [id])
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
 }
