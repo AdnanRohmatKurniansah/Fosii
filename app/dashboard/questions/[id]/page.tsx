@@ -42,9 +42,9 @@ const DetailQuestion = async ({ params }: {params: Params}) => {
   
   return (
     <LayoutDashboard>
-      <div className='questions grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mt-10'>
-        <div className="pic">
-            <Image className='rounded-lg' alt='Question image' src={`/${formattedQuestions.pic}`} layout="responsive" width={100} height={100}/>
+      <div className='questions mt-10'>
+        <div className="pic flex justify-center">
+            <Image className='rounded-lg' alt='Question image' src={`/${formattedQuestions.pic}`} width={500} height={500}/>
         </div>
         <div className="detail">
             <Badge className='status my-2' variant='solid' color={formattedQuestions.status == 'Open' ? 'blue' : 'red' }>{formattedQuestions.status}</Badge>
@@ -56,10 +56,10 @@ const DetailQuestion = async ({ params }: {params: Params}) => {
                     <small className='updated_at'>Modified: {formatDate(formattedQuestions.updated_at)}</small>
                 </div>
             </div>
-            <div className="description mt-5">
-                <ReactMarkdown>{formattedQuestions.description}</ReactMarkdown>
-            </div>
         </div>  
+        <div className="description mt-5">
+          <ReactMarkdown>{formattedQuestions.description}</ReactMarkdown>
+        </div>
       </div>
       <Answers answerCount={formattedQuestions.answerCount} questionId={formattedQuestions.id}/>
     </LayoutDashboard>

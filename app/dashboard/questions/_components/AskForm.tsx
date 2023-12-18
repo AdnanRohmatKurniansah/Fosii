@@ -11,10 +11,11 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { Controller, FieldError, useForm } from 'react-hook-form'
 import { z } from 'zod'
-import SimpleMdeReact from 'react-simplemde-editor'
+import MDEditor from '@uiw/react-md-editor'
 import TagSelect from './TagSelect'
 import { Question } from '@prisma/client'
 import { Tips, Info } from './Tips'
+import rehypeSanitize from "rehype-sanitize"
 
 type QuestionFormData = z.infer<typeof QuestionSchema>
 type QuestionUpdateFormData = z.infer<typeof QuestionUpdateSchema>
@@ -94,7 +95,16 @@ const AskForm = ({ question }: { question?: Question }) => {
                 control={control}
                 defaultValue={question?.description}
                 render={({ field }) => (
-                <SimpleMdeReact {...register('description')} placeholder="Description" {...field} />
+                <MDEditor
+                  value={field.value}
+                  onChange={(value) => field.onChange(value)}
+                  preview="edit"
+                  height={300}
+                  fullscreen={false}
+                  previewOptions={{
+                    rehypePlugins: [[rehypeSanitize]],
+                  }}
+                />
                 )}
             />
           </TextField.Root>

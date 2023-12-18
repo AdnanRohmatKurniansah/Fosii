@@ -1,8 +1,8 @@
 import React from 'react'
 import AnswerForm from './AnswerForm'
 import { prisma } from '@/app/utils/prisma'
-import ReactMardown from 'react-markdown'
 import { formatDate } from '@/app/utils/formatDate'
+import MarkDown from '@/app/components/MarkDown'
 
 const Answers = async ({ answerCount, questionId }: {answerCount: number, questionId: number}) => {
   const answers = await prisma.answer.findMany({
@@ -19,14 +19,14 @@ const Answers = async ({ answerCount, questionId }: {answerCount: number, questi
 
   return (
     <div className='mt-10'>
-      <div className="list-answer max-w-2xl">
+      <div className="list-answer max-w-3xl">
         {answers.length > 0 && (
         <>
         <h1 className='text-xl mb-3'>{answerCount} Answers</h1>
         {answers.map((answer, i) => (
           <div key={i} className="border-t border-gray-200 py-4 px-2">
-            <ReactMardown className="mb-3">{answer.content}</ReactMardown>
-            <div className="user flex justify-end">
+            <MarkDown content={answer.content}/>
+            <div className="user flex justify-end mt-5">
                 <small className="name"><span className="text-blue-600">{answer.user.name}</span> {formatDate(answer.created_at)}</small>
             </div>
           </div>
