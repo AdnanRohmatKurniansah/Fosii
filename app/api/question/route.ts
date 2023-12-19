@@ -6,6 +6,7 @@ import { ZodError } from 'zod';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/route';
 import { validateFile } from '@/app/utils/validateFile'
+import { generateUniqueSlug } from '@/app/utils/generateSlug';
 
 export const GET = async () => {
   try {
@@ -46,6 +47,8 @@ export const POST = async (req: NextRequest) => {
       pic: formData.get('pic')
     });
 
+    const slug = await generateUniqueSlug(requestData.title)
+
     if (requestData.pic) {
       const fileValidationResult = validateFile(requestData.pic)
       if (fileValidationResult) {
@@ -66,10 +69,11 @@ export const POST = async (req: NextRequest) => {
       const question = await prisma.question.create({
         data: {
           title: requestData.title,
+          slug,
           description: requestData.description,
           tagId: requestData.tagId,
           userId: session.user.id,
-          pic: filePath,
+          pic: filePath
         },
       }) 
 

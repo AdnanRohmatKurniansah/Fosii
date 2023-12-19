@@ -47,7 +47,7 @@ const AnswersCommentsForm = ({ questionId, answerId }: Answer) => {
                 <AlertDialog.Description size="2">
                     <input type="hidden" {...register('questionId')} name="questionId" value={questionId}/>
                     <input type="hidden" {...register('answerId')} name="answerId" value={answerId}/>
-                    <TextArea {...register('content')} name='content' placeholder="Your comment…" />
+                    <TextArea style={{ height: 200 }} {...register('content')} name='content' placeholder="Your comment…" />
                 </AlertDialog.Description>
                 <Flex gap="3" mt="4" justify="end">
                     <AlertDialog.Cancel>

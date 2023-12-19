@@ -23,6 +23,7 @@ const TopQuestions = async () => {
 
   const formattedQuestions = questions.map((question) => ({
     id: question.id,
+    slug: question.slug,
     title: question.title,
     status: question.status,
     tagName: question.tag.name, 
@@ -48,7 +49,7 @@ const TopQuestions = async () => {
               <Badge color={quest.status == 'Open' ? 'blue' : 'crimson'} variant="outline" className="mt-4">{quest.status}</Badge>
             </div>
             <div className="title col-span-4">
-              <Link href={`/dashboard/questions/${quest.id}`}>
+              <Link href={`/dashboard/questions/${quest.slug}`}>
                 <h1 className="text-md mb-3">{quest.title}</h1>
               </Link>
               <div className="block md:flex lg:flex justify-between items-center">

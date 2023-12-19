@@ -1,18 +1,17 @@
 import LayoutDashboard from '@/app/components/LayoutDashboard'
-import { Params } from '@/app/types/types'
 import { formatDate } from '@/app/utils/formatDate'
 import { prisma } from '@/app/utils/prisma'
 import { Badge } from '@radix-ui/themes'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import React from 'react'
-import ReactMarkdown from 'react-markdown'
 import Answers from './_components/Answers'
+import MarkDown from '@/app/components/MarkDown'
 
-const DetailQuestion = async ({ params }: {params: Params}) => {
-  const question = await prisma.question.findUnique({
+const DetailQuestion = async ({ slug }: {slug: string}) => {
+  const question = await prisma.question.findFirst({
     where: {
-        id: parseInt(params.id)
+        slug: slug
     },
     include: {
       tag: true,
@@ -58,7 +57,7 @@ const DetailQuestion = async ({ params }: {params: Params}) => {
             </div>
         </div>  
         <div className="description mt-5">
-          <ReactMarkdown>{formattedQuestions.description}</ReactMarkdown>
+          <MarkDown content={formattedQuestions.description} />
         </div>
       </div>
       <Answers answerCount={formattedQuestions.answerCount} questionId={formattedQuestions.id}/>

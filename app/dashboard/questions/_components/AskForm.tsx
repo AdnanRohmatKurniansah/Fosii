@@ -53,6 +53,7 @@ const AskForm = ({ question }: { question?: Question }) => {
           setSelectedTagId(data.data.tagId)
         }
         router.push('/dashboard/my-questions')
+        router.refresh()
       }).catch(({response}) => {  
         setIsSubmitting(false)
         alert(response.data.message, 'error')

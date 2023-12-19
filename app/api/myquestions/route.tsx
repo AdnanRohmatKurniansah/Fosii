@@ -29,6 +29,7 @@ export const GET = async () => {
 
         const formattedQuestions = questions.map((question) => ({
             id: question.id,
+            slug: question.slug,
             title: question.title,
             description: question.description,
             pic: question.pic,

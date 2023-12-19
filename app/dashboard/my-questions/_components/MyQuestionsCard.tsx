@@ -71,7 +71,7 @@ const MyQuestionsCard = () => {
                 </div>
                 <div className="actions mb-4 flex justify-end">
                   <Button variant='solid' color='green'>
-                    <Link href={`/dashboard/questions/edit/${question.id}`}>
+                    <Link href={`/dashboard/questions/edit/${question.slug}`}>
                       <AiFillEdit />
                     </Link>
                   </Button>
@@ -84,7 +84,9 @@ const MyQuestionsCard = () => {
                 <Badge variant="soft">{question.tagName}</Badge>
                 <Badge color={question.status == 'Open' ? 'blue' : 'crimson'} variant="outline">{question.status}</Badge>
               </div>
-              <h1 className="text-md my-3">{question.title}</h1>
+              <Link href={`/dashboard/question/${question.slug}`}>
+                <h1 className="text-md my-3">{question.title}</h1>
+              </Link>
               <div className="flex justify-between items-center">
                   <div className="answers">
                       <p className='text-sm'>{question.answersCount} answers</p>

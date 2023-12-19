@@ -4,6 +4,7 @@ export interface Params {
 
 export interface MyQuestion {
     id: number
+    slug: string
     title: string
     description: string
     pic: string

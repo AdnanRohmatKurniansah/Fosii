@@ -8,6 +8,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { ZodError } from "zod"
 import { authOptions } from "../../auth/[...nextauth]/route"
 import { validateFile } from "@/app/utils/validateFile"
+import { generateUniqueSlug } from "@/app/utils/generateSlug"
 
 export const GET = async (req: NextRequest, {params}: { params: Params }) => {
     const id = parseInt(params.id)
@@ -62,6 +63,8 @@ export const PUT = async (req: NextRequest, {params}: { params: Params }) => {
             pic: formData.get('pic')
         })
 
+        const slug = await generateUniqueSlug(requestData.title)
+
         const Question = await prisma.question.findUnique({
             where: {
                 id: id
@@ -92,6 +95,7 @@ export const PUT = async (req: NextRequest, {params}: { params: Params }) => {
         
         const questionData = {
             title: requestData.title,
+            slug,
             description: requestData.description,
             tagId: requestData.tagId,
             pic: filePath || Question.pic, 
