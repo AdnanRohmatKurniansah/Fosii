@@ -10,13 +10,13 @@ import { generateUniqueSlug } from '@/app/utils/generateSlug';
 
 export const GET = async () => {
   try {
-    const issue = await prisma.question.findMany({
+    const questions = await prisma.question.findMany({
       orderBy: {
         id: 'desc'
       }
     })
     return NextResponse.json({
-      data: issue
+      data: questions
     })
   } catch (error) {
     return NextResponse.json({
