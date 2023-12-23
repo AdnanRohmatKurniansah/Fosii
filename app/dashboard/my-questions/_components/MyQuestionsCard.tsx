@@ -1,10 +1,8 @@
 'use client'
 
 import { Badge, Button, Card } from '@radix-ui/themes'
-import { InvalidateQueryFilters, useQuery, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import React from 'react'
-import MyQuestionsSkeleton from './MyQuestionsSkeleton'
 import { MyQuestion } from '@/app/types/types'
 import { formatDate } from '@/app/utils/formatDate'
 import Link from 'next/link'
@@ -12,54 +10,43 @@ import { AiFillEdit } from 'react-icons/ai'
 import DeleteButton from '../../questions/_components/DeleteButton'
 import { alert } from '@/app/components/Toast'
 import CloseButton from '../../questions/_components/CloseButton'
+import { useRouter } from 'next/navigation'
 
-type Data = {
+interface Data {
    questionId: number
 }
 
-const MyQuestionsCard = () => {
-  const queryClient = useQueryClient()
-  const useQuestion = () => useQuery<MyQuestion[]>({
-    queryKey: ['questions'],
-    queryFn: () => axios.get('/api/myquestions').then((res) => res.data.data),
-    staleTime: 60 * 1000,
-    retry: 3,
-  })
+interface Questions {
+  questions: MyQuestion[]
+}
 
-  const { data: questions, error, isLoading } = useQuestion()
-
+const MyQuestionsCard = ({ questions }: Questions) => {
+  const router = useRouter()
   const handleQuestionDelete = async (id: number) => {
-    try {
-      queryClient.setQueryData<MyQuestion[]>(['questions'], (oldData) =>
-        oldData?.filter((question) => question.id !== id) || []
-      )
-      const response = await axios.delete(`/api/question/${id}`)
-      alert(response.data.message, 'success')
-      queryClient.invalidateQueries(['questions'] as InvalidateQueryFilters)
-    } catch (error) {
-      console.error('An error occurred during question deletion:', error)
-    }
+    await axios.delete(`/api/question/${id}`)
+      .then(({data}) => {
+        alert(data.message, 'success')
+        router.push('/dashboard/my-questions')
+        router.refresh()
+      }).catch(({response}) => {  
+        alert(response.data.message, 'error')
+      })
   }
-
-  if (isLoading) return <MyQuestionsSkeleton /> 
-
-  if (error || !questions) return null
   
   const closeQuestion = async (data: Data) => {
-    try {
-        queryClient.setQueryData<MyQuestion[]>(['questions'], (oldData) =>
-          oldData?.filter((question) => question.id !== data.questionId) || []
-        )
-        const response = await axios.post('/api/question/close', data)
-        alert(response.data.message, 'success')
-        queryClient.invalidateQueries(['questions'] as InvalidateQueryFilters)
-      } catch (error) {
-        console.error('An error occurred during question deletion:', error)
-      }
+    await axios.post('/api/question/close', data)
+      .then(({data}) => {
+        alert(data.message, 'success')
+        router.push('/dashboard/my-questions')
+        router.refresh()
+      }).catch(({response}) => {  
+        alert(response.data.message, 'error')
+      })
   }
   
   return (
-    <>  {questions.length > 0 ? (
+    <div className={`${questions.length < 6 ? 'mb-20 md:mb-48' : ''}`}>  
+    {questions.length > 0 ? (
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10'>
           {questions.map((question, i) => (
             <Card key={i} className='questionstagName p-4 mb-5'>
@@ -103,8 +90,8 @@ const MyQuestionsCard = () => {
           <div className="flex flex-col text-center justify-center items-center my-60">
             <h1 className='text-3xl'>You havent asked any questions at all</h1>
           </div>
-        )}
-    </>
+    )}
+    </div>
   )
 }
 

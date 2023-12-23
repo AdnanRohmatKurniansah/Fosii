@@ -4,7 +4,7 @@ import { prisma } from '@/app/utils/prisma'
 import { Badge } from '@radix-ui/themes'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import React from 'react'
+import React, { cache } from 'react'
 import Answers from './_components/Answers'
 import MarkDown from '@/app/components/MarkDown'
 
@@ -14,20 +14,22 @@ interface Params {
   }
 }
 
-const DetailQuestion = async ({ params }: Params) => {
-  const question = await prisma.question.findUnique({
-    where: {
-        slug: params.slug
-    },
-    include: {
-      tag: true,
-      answers: {
-        select: {
-          id: true,
-        },
+const fetchQuestion = cache((slug: string) => prisma.question.findUnique({
+  where: {
+      slug: slug
+  },
+  include: {
+    tag: true,
+    answers: {
+      select: {
+        id: true,
       },
     },
-  })
+  },
+}))
+
+const DetailQuestion = async ({ params }: Params) => {
+  const question = await fetchQuestion(params.slug)
 
   if (!question) {
     notFound()
@@ -70,5 +72,7 @@ const DetailQuestion = async ({ params }: Params) => {
     </LayoutDashboard>
   )
 }
+
+
 
 export default DetailQuestion
