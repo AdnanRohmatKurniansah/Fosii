@@ -8,10 +8,16 @@ import React from 'react'
 import Answers from './_components/Answers'
 import MarkDown from '@/app/components/MarkDown'
 
-const DetailQuestion = async ({ slug }: {slug: string}) => {
-  const question = await prisma.question.findFirst({
+interface Params {
+  params: {
+    slug: string
+  }
+}
+
+const DetailQuestion = async ({ params }: Params) => {
+  const question = await prisma.question.findUnique({
     where: {
-        slug: slug
+        slug: params.slug
     },
     include: {
       tag: true,

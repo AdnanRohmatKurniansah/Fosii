@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useState } from 'react';
 import TagSkeleton from './TagSkeleton';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 interface Tag {
   id: number;
@@ -35,9 +37,11 @@ const TagList = () => {
       <h1 className="text-2xl">Tags</h1>
       <div className="list my-5">
         {tags.slice(0, displayTag).map((tag, i) => (
-          <Badge key={i} variant="soft" className="mr-2">
-            {tag.name}
-          </Badge>
+          <Link key={i} href={`/dashboard/questions/tagged/${tag.name}`}>
+            <Badge variant="soft" className="mr-2 hover:cursor-pointer hover:text-blue-500">
+              {tag.name}
+            </Badge>
+          </Link>
         ))}
       </div>
       {displayTag < tags.length && (

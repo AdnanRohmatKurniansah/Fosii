@@ -104,7 +104,6 @@ const MyQuestionsCard = () => {
             <h1 className='text-3xl'>You havent asked any questions at all</h1>
           </div>
         )}
-        
     </>
   )
 }

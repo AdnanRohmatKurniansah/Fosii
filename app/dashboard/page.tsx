@@ -7,16 +7,11 @@ import Pagination from '../components/Pagination'
 import { Badge, Button } from '@radix-ui/themes'
 import Link from 'next/link'
 import { formatDate } from '../utils/formatDate'
-
-interface Props {
-  searchParams: {
-    page?: string
-  }
-}
+import { Props } from '../types/types'
 
 const Dashboard = async ({ searchParams }: Props) => {
   const page = Number(searchParams?.page) || 1
-  const pageSize = 2
+  const pageSize = 15
   const questions = await prisma.question.findMany({
     orderBy: {
       answers: {
@@ -63,7 +58,7 @@ const Dashboard = async ({ searchParams }: Props) => {
               <div key={i} className="list p-4 border-t grid grid-cols-1 md:grid-cols-5 border-gray-200">
                 <div className="response col-span-1">
                   <p className="answers">{quest.answersCount} answers</p>
-                  <Badge color={quest.status == 'Open' ? 'blue' : 'red'} variant="outline" className="mt-4">{quest.status}</Badge>
+                  <Badge color={quest.status == 'Open' ? 'blue' : 'red'} variant="outline" className="my-3">{quest.status}</Badge>
                 </div>
                 <div className="title col-span-4">
                   <Link href={`/dashboard/questions/${quest.slug}`}>

@@ -2,6 +2,12 @@ export interface Params {
     id: string
 }
 
+export interface Props {
+    searchParams: {
+      page?: string
+    }
+}
+
 export interface MyQuestion {
     id: number
     slug: string
