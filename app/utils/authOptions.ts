@@ -25,7 +25,7 @@ export const authOptions: AuthOptions = {
                 return null
               }
                 
-              const existUser = await prisma.user.findFirst({
+              const existUser = await prisma.user.findUnique({
                 where: {
                   username: credentials.username
                 }

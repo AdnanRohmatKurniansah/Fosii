@@ -45,7 +45,7 @@ export default function Home() {
 
   return (
     <div className='login'>
-      <div className='container mx-auto max-w-md h-screen flex flex-col justify-center'>
+      <div className='container px-5 md:mx-auto max-w-md h-screen flex flex-col justify-center'>
       <div className='loginborder p-5 bg-white border-gray-500 shadow-sm shadow-gray-500 rounded-lg'>
         <div className="flex justify-center my-5">
           <Image width={160} height={100} alt="logo" src={Logo} />

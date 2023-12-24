@@ -104,7 +104,7 @@ const Navbar = () => {
 
 const SearchButton = ({ onClick }: { onClick: () => void }) => {
   return (
-    <button className='bg-transparent' onClick={onClick}>
+    <button className='bg-transparent mx-5' onClick={onClick}>
       <AiOutlineSearch className="w-5 h-5" />
     </button>
   );
@@ -119,7 +119,7 @@ interface SearchInputProps {
 const SearchInput: React.FC<SearchInputProps> = ({ searchRef, handleSearch }) => {
   return (
     <TextField.Root className='w-full'>
-      <TextField.Input ref={searchRef} onKeyDown={handleSearch} type="text" placeholder="Search..." className="border w-80 rounded py-1" />
+      <TextField.Input ref={searchRef} onKeyDown={handleSearch} type="text" placeholder="Search..." className="py-1" />
     </TextField.Root>
   );
 };
