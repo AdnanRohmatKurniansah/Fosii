@@ -2,7 +2,7 @@ import LayoutDashboard from '@/app/components/LayoutDashboard'
 import React from 'react'
 import MyQuestionsCard from './_components/MyQuestionsCard'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { authOptions } from '@/app/utils/authOptions'
 import { prisma } from '@/app/utils/prisma'
 
 const MyQuestions = async () => {

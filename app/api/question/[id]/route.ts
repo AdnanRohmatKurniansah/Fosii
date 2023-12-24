@@ -6,7 +6,7 @@ import { unlink } from "fs/promises"
 import { getServerSession } from "next-auth"
 import { NextRequest, NextResponse } from "next/server"
 import { ZodError } from "zod"
-import { authOptions } from "../../auth/[...nextauth]/route"
+import { authOptions } from '@/app/utils/authOptions'
 import { validateFile } from "@/app/utils/validateFile"
 import { generateUniqueSlug } from "@/app/utils/generateSlug"
 

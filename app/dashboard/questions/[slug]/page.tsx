@@ -73,6 +73,4 @@ const DetailQuestion = async ({ params }: Params) => {
   )
 }
 
-
-
 export default DetailQuestion

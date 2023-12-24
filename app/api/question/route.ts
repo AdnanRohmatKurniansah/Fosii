@@ -4,7 +4,7 @@ import { uploadImage } from '@/app/utils/uploadImg';
 import { QuestionSchema } from '@/app/validations/QuestionValidation';
 import { ZodError } from 'zod';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../auth/[...nextauth]/route';
+import { authOptions } from '@/app/utils/authOptions'
 import { validateFile } from '@/app/utils/validateFile'
 import { generateUniqueSlug } from '@/app/utils/generateSlug';
 

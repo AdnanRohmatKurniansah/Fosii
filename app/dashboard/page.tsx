@@ -84,9 +84,4 @@ const Dashboard = async ({ searchParams }: Props) => {
   )
 }
 
-export const metadata: Metadata = {
-  title: 'Fosi - Dashboard',
-  description: 'View all top questions'
-}
-
 export default Dashboard

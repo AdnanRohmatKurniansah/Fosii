@@ -3,12 +3,17 @@ import React from 'react'
 import AskForm from '../../_components/AskForm'
 import { prisma } from '@/app/utils/prisma'
 import { notFound } from 'next/navigation'
-import { Metadata } from 'next'
 
-const EditQuestions = async ({ slug }: {slug: string}) => {
-  const question = await prisma.question.findFirst({
+interface Params {
+  params: {
+    slug: string
+  }
+}
+
+const EditQuestions = async ({ params }: Params) => {
+  const question = await prisma.question.findUnique({
     where: {
-        slug: slug
+        slug: params.slug
     }
   })
 
@@ -21,11 +26,6 @@ const EditQuestions = async ({ slug }: {slug: string}) => {
       <AskForm question={question} />
     </LayoutDashboard>
   )
-}
-
-export const metadata: Metadata = {
-    title: 'Fosi - Edit question ',
-    description: 'Edit description'
 }
 
 export default EditQuestions
