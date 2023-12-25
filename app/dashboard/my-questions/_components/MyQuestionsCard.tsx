@@ -68,7 +68,11 @@ const MyQuestionsCard = ({ questions }: Questions) => {
                 </div>
               </div>
               <div className="flex justify-between items-center">
-                <Badge variant="soft">{question.tagName}</Badge>
+                <Link href={`/dashboard/questions/tagged/${question.tagName}`}>
+                  <Badge variant="soft" className="mr-2 hover:cursor-pointer hover:text-blue-500">
+                    {question.tagName}
+                  </Badge>
+                </Link>
                 <Badge color={question.status == 'Open' ? 'blue' : 'crimson'} variant="outline">{question.status}</Badge>
               </div>
               <Link href={`/dashboard/questions/${question.slug}`}>

@@ -9,7 +9,7 @@ const CloseButton: React.FC<CloseButtonProps> = ({ onClick }) => {
   return (
     <AlertDialog.Root>
         <AlertDialog.Trigger>
-            <Button color="blue">Close</Button>
+            <Button variant='solid' color="blue">Close</Button>
         </AlertDialog.Trigger>
         <AlertDialog.Content style={{ maxWidth: 450 }}>
             <AlertDialog.Title>Close question</AlertDialog.Title>

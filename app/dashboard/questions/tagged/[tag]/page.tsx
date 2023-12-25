@@ -82,7 +82,11 @@ const QuestionByTag = async ({ params, searchParams }: QuestionByTagProps) => {
                       </Link>
                       <div className="block md:flex lg:flex justify-between items-center">
                         <div className="tags mb-2 md:mb-0">
-                          <Badge variant="soft" className="mr-2">{quest.tagName}</Badge>
+                          <Link href={`/dashboard/questions/tagged/${quest.tagName}`}>
+                            <Badge variant="soft" className="mr-2 hover:cursor-pointer hover:text-blue-500">
+                              {quest.tagName}
+                            </Badge>
+                          </Link>
                         </div>
                         <div className="user">
                           <small className="name"><span className="text-blue-600">{quest.author}</span> {formatDate(quest.created_at)}</small>

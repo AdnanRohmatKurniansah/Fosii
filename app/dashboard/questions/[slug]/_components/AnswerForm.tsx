@@ -62,7 +62,7 @@ const AnswerForm = ({ questionId }: {questionId: number}) => {
             />
         </TextField.Root>
         <Text color="red" className='mb-3' as="p">{errors.content?.message}</Text>
-        <Button type='submit' disabled={isSubmitting} size={'3'} variant="solid">
+        <Button type='submit' color='blue' disabled={isSubmitting} size={'3'} variant="solid">
             Submit
             {isSubmitting && <Spinner />}
         </Button>   

@@ -6,7 +6,7 @@ const DeleteButton = ({ onDelete }: {onDelete: () => void}) => {
   return (
     <AlertDialog.Root>
         <AlertDialog.Trigger>
-            <Button color="red"><AiFillDelete /></Button>
+            <Button variant='solid' color="red"><AiFillDelete /></Button>
         </AlertDialog.Trigger>
         <AlertDialog.Content style={{ maxWidth: 450 }}>
             <AlertDialog.Title>Delete question</AlertDialog.Title>
