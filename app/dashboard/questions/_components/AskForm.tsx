@@ -64,6 +64,7 @@ const AskForm = ({ question }: { question?: Question }) => {
         setIsSubmitting(false)
         alert(data.message, 'success')
         router.push('/dashboard/my-questions')
+        router.refresh()
       }).catch(({response}) => {  
         setIsSubmitting(false)
         alert(response.data.message, 'error')

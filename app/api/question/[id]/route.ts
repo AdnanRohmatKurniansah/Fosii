@@ -9,6 +9,7 @@ import { ZodError } from "zod"
 import { authOptions } from '@/app/utils/authOptions'
 import { validateFile } from "@/app/utils/validateFile"
 import { generateUniqueSlug } from "@/app/utils/generateSlug"
+import * as fs from 'fs/promises'
 
 export const GET = async (req: NextRequest, {params}: { params: Params }) => {
     const id = parseInt(params.id)
@@ -87,6 +88,7 @@ export const PUT = async (req: NextRequest, {params}: { params: Params }) => {
                 }, { status: fileValidationResult.status })
             }
             const destinationFolder = 'public/question'
+            await fs.mkdir(destinationFolder, { recursive: true })
             if (Question.pic) {
                 await unlink(`public/${Question.pic}`);
             }
