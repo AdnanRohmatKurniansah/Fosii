@@ -9,7 +9,9 @@ const CloseButton: React.FC<CloseButtonProps> = ({ onClick }) => {
   return (
     <AlertDialog.Root>
         <AlertDialog.Trigger>
-            <Button variant='solid' color="blue">Close</Button>
+            <button className='bg-blue-500 text-white text-sm font-bold py-1 px-2 rounded'>
+                Close
+            </button> 
         </AlertDialog.Trigger>
         <AlertDialog.Content style={{ maxWidth: 450 }}>
             <AlertDialog.Title>Close question</AlertDialog.Title>
@@ -23,9 +25,9 @@ const CloseButton: React.FC<CloseButtonProps> = ({ onClick }) => {
                 </Button>
             </AlertDialog.Cancel>
             <AlertDialog.Action>
-                <Button onClick={onClick} variant="solid" color="blue">
-                Close
-                </Button>
+                <button onClick={onClick} className='bg-blue-500 text-white text-sm font-bold py-1 px-2 rounded'>
+                   Close
+                </button> 
             </AlertDialog.Action>
             </Flex>
         </AlertDialog.Content>

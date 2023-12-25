@@ -61,11 +61,11 @@ const AnswerForm = ({ questionId }: {questionId: number}) => {
                 )}
             />
         </TextField.Root>
-        <Text color="red" className='mb-3' as="p">{errors.content?.message}</Text>
-        <Button type='submit' color='blue' disabled={isSubmitting} size={'3'} variant="solid">
-            Submit
-            {isSubmitting && <Spinner />}
-        </Button>   
+        <Text color="red" className='pb-3' as="p">{errors.content?.message}</Text>
+        <button type='submit' disabled={isSubmitting} className={`bg-blue-500 text-white font-bold py-2 px-4 rounded ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'}`}>
+          Submit
+          {isSubmitting && <Spinner />}
+        </button> 
     </form>
   )
 }

@@ -73,7 +73,7 @@ const Navbar = () => {
       <Container>
         <Flex justify="between">
           <Flex align="center" gap="6">
-            <Link href="/">
+            <Link href="/dashboard">
               <Image alt='logo' width={'80'} height={'50'} src={Logo} />
             </Link>
             <Flex gap="6" className="flex-grow">

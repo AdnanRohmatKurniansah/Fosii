@@ -6,7 +6,9 @@ const DeleteButton = ({ onDelete }: {onDelete: () => void}) => {
   return (
     <AlertDialog.Root>
         <AlertDialog.Trigger>
-            <Button variant='solid' color="red"><AiFillDelete /></Button>
+            <button className='bg-red-600 text-white font-bold py-2 px-3 rounded'>
+                <AiFillDelete />
+            </button> 
         </AlertDialog.Trigger>
         <AlertDialog.Content style={{ maxWidth: 450 }}>
             <AlertDialog.Title>Delete question</AlertDialog.Title>
@@ -20,9 +22,9 @@ const DeleteButton = ({ onDelete }: {onDelete: () => void}) => {
                 </Button>
             </AlertDialog.Cancel>
             <AlertDialog.Action>
-                <Button onClick={onDelete} variant="solid" color="red">
-                Delete
-                </Button>
+                <button onClick={onDelete} className='bg-red-600 text-white text-sm font-bold py-1 px-2 rounded'>
+                   Delete
+                </button> 
             </AlertDialog.Action>
             </Flex>
         </AlertDialog.Content>
