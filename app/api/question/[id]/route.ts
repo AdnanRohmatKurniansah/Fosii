@@ -1,15 +1,16 @@
 import { Params } from "@/app/types/types"
 import { prisma } from "@/app/utils/prisma"
-import { uploadImage } from "@/app/utils/uploadImg"
+import { configureCloudinary, uploadToCloudinary } from "@/app/utils/uploadToCloudinary"
 import { QuestionUpdateSchema } from "@/app/validations/QuestionValidation"
-import { unlink } from "fs/promises"
 import { getServerSession } from "next-auth"
 import { NextRequest, NextResponse } from "next/server"
 import { ZodError } from "zod"
 import { authOptions } from '@/app/utils/authOptions'
 import { validateFile } from "@/app/utils/validateFile"
 import { generateUniqueSlug } from "@/app/utils/generateSlug"
-import * as fs from 'fs/promises'
+import { v2 as cloudinary } from 'cloudinary'
+
+configureCloudinary()
 
 export const GET = async (req: NextRequest, {params}: { params: Params }) => {
     const id = parseInt(params.id)
@@ -52,10 +53,10 @@ export const PUT = async (req: NextRequest, {params}: { params: Params }) => {
         if (!session) { 
             return NextResponse.json({
                 error: 'User not authenticated',
-            }, { status: 401 });
+            }, { status: 401 })
         }
 
-        const tagId = parseInt(formData.get('tagId') as string || '', 10);
+        const tagId = parseInt(formData.get('tagId') as string || '', 10)
     
         const requestData = QuestionUpdateSchema.parse({
             title: formData.get('title'),
@@ -87,12 +88,14 @@ export const PUT = async (req: NextRequest, {params}: { params: Params }) => {
                 message: fileValidationResult.message
                 }, { status: fileValidationResult.status })
             }
-            const destinationFolder = 'public/question'
-            await fs.mkdir(destinationFolder, { recursive: true })
             if (Question.pic) {
-                await unlink(`public/${Question.pic}`);
+                const publicIdMatch = Question.pic.match(/\/v\d+\/(.+?)\.\w+$/)
+                const publicId = publicIdMatch ? publicIdMatch[1] : null
+                if (publicId) {
+                    await cloudinary.uploader.destroy(publicId)
+                }
             }
-            filePath = await uploadImage(requestData.pic, destinationFolder) 
+            filePath = await uploadToCloudinary(requestData.pic) 
         }
         
         const questionData = {
@@ -118,11 +121,11 @@ export const PUT = async (req: NextRequest, {params}: { params: Params }) => {
             return NextResponse.json({
               message: 'Validation error',
               errors: error.errors,
-            }, { status: 400 });
+            }, { status: 400 })
           } else {
             return NextResponse.json({
               message: error,
-            }, { status: 500 });
+            }, { status: 500 })
           }
     }
 }
@@ -137,7 +140,11 @@ export const DELETE = async (req: NextRequest, {params}: { params: Params }) => 
         })
 
         if (question?.pic) {
-            await unlink(`public/${question.pic}`)
+            const publicIdMatch = question.pic.match(/\/v\d+\/(.+?)\.\w+$/)
+            const publicId = publicIdMatch ? publicIdMatch[1] : null
+            if (publicId) {
+                await cloudinary.uploader.destroy(publicId)
+            }
         }
 
         const response = await prisma.question.delete({
