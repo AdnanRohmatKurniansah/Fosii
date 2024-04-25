@@ -56,9 +56,9 @@ const AnswersCommentsForm = ({ questionId, answerId }: Answer) => {
                         </Button>
                     </AlertDialog.Cancel>
                     <AlertDialog.Action>
-                        <Button type='submit' variant="solid" color="blue">
+                        <button type='submit' className='bg-blue-500 text-sm text-white font-bold py-1 px-4 rounded'>
                         Submit
-                        </Button>
+                        </button>
                     </AlertDialog.Action>
                 </Flex>
             </form>
